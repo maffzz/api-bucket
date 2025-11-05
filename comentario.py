@@ -8,7 +8,10 @@ dynamodb = boto3.resource('dynamodb')
 s3 = boto3.client('s3')
 
 def lambda_handler(event, context):
-    body = json.loads(event['body'])
+    body = event.get('body')
+    if isinstance(body, str):
+        body = json.loads(body)
+
     tenant_id = body['tenant_id']
     comentario = body['comentario']
 
